@@ -12,7 +12,8 @@ function MainFrame({children}) {
   const [selected, setSelected] = useState(0);
   useEffect(() => {
     const path = location.pathname;
-    setSelected(path === '/embed' ? 0 : path === '/embed/settings' ? 2 : 1);
+    console.log(path);
+    setSelected(path === '/embed/notifications' ? 1 : path === '/embed/settings' ? 2 : 0);
   }, [location]);
   const userMenuMarkup = <TopBar.UserMenu name="Avada" initials="A" />;
 

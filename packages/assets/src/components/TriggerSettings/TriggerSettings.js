@@ -1,29 +1,27 @@
-import React, {useState} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import {Select, TextField, Box} from '@shopify/polaris';
 
-const TriggerSettings = () => {
-  const [restriction, setRestriction] = useState('All pages');
-  const [excludedPage, setExcludedPage] = useState('');
-  const [includedPage, setIncludedPage] = useState('');
+const TriggerSettings = ({input, setInput}) => {
   const options = [
-    {label: 'All pages', value: 'All pages'},
-    {label: 'Specific pages', value: 'Specific pages'}
+    {label: 'All pages', value: 'all'},
+    {label: 'Specific pages', value: 'specific'}
   ];
   return (
     <React.Fragment>
       <Select
         label="PAGES RESTRICTION"
         options={options}
-        value={restriction}
-        onChange={setRestriction}
+        value={input.allowShow}
+        onChange={allowShow => setInput(prev => ({...prev, allowShow}))}
       />
-      {restriction === 'Specific pages' && (
+      {input.allowShow === 'specific' && (
         <Box paddingBlockStart={400}>
           <TextField
             label="Included Pages"
             helpText="Page URLs to show the pop-up (separated by new lines)"
-            value={includedPage}
-            onChange={setIncludedPage}
+            value={input.includedUrls}
+            onChange={includedUrls => setInput(prev => ({...prev, includedUrls}))}
             multiline={4}
           />
         </Box>
@@ -32,13 +30,18 @@ const TriggerSettings = () => {
         <TextField
           label="Excluded Pages"
           helpText="Page URLs NOT to show the pop-up (separated by new lines)"
-          value={excludedPage}
-          onChange={setExcludedPage}
+          value={input.excludedUrls}
+          onChange={excludedUrls => setInput(prev => ({...prev, excludedUrls}))}
           multiline={4}
         />
       </Box>
     </React.Fragment>
   );
+};
+
+TriggerSettings.propTypes = {
+  input: PropTypes.any,
+  setInput: PropTypes.func
 };
 
 export default TriggerSettings;

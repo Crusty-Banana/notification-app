@@ -2,8 +2,7 @@ import React, {useState} from 'react';
 import {RangeSlider, Box, TextField, Text} from '@shopify/polaris';
 import PropTypes from 'prop-types';
 
-const SliderSettings = ({label, min, max, initialValue, suffix, helperText}) => {
-  const [value, setValue] = useState(initialValue);
+const SliderSettings = ({label, min, max, suffix, helperText, value, setValue}) => {
   return (
     <React.Fragment>
       <RangeSlider

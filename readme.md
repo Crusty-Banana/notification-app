@@ -4,23 +4,23 @@
 
 ## Preparation
 
-* [A Firebase account](https://firebase.google.com/)
+- [A Firebase account](https://firebase.google.com/)
 
-* A Firebase project
+- A Firebase project
 
-* [A Shopify partner account](https://www.shopify.com/partners)
+- [A Shopify partner account](https://www.shopify.com/partners)
 
-* A Shopify app in partner account
+- A Shopify app in partner account
 
 ## Installation
 
-* Choose a project staging for Firebase application
+- Choose a project staging for Firebase application
 
 ```bash
 firebase use --add
 ```
 
-* Configure all settings for Firebase development environment by create a new file `.runtimeconfig.json` inside the `packages/functions`
+- Configure all settings for Firebase development environment by create a new file `.runtimeconfig.json` inside the `packages/functions`
 
 ```json
 {
@@ -35,7 +35,7 @@ firebase use --add
 }
 ```
 
-* Create a file `.env.development` with content in [packages/assets](/packages/assets)
+- Create a file `.env.development` with content in [packages/assets](/packages/assets)
 
 ```dotenv
 VITE_SHOPIFY_API_KEY=<Insert here>
@@ -47,15 +47,16 @@ VITE_FIREBASE_APP_ID=<Insert here>
 VITE_FIREBASE_MEASUREMENT_ID=<Insert here>
 ```
 
-* Create an empty Firestore database
-* Deploy the Firestore default indexes
+- Create an empty Firestore database
+- Deploy the Firestore default indexes
+
 ```bash
 firebase deploy --only firestore
 ```
 
 ## Development
 
-* To start to develop, please run 2 below commands
+- To start to develop, please run 2 below commands
 
 ```bash
 npm run dev
@@ -63,11 +64,12 @@ npm run dev
 
 ```bash
 GOOGLE_APPLICATION_CREDENTIALS=<Path to service-account.json> firebase serve
+GOOGLE_APPLICATION_CREDENTIALS=serviceAccount.development.json npm run emulators
 ```
 
 ## Lint
 
-* All your files must be passed [ESLint](https://eslint.org/):
+- All your files must be passed [ESLint](https://eslint.org/):
 
 To setup a git hook before committing to Gitlab, please run:
 
@@ -77,13 +79,13 @@ cp git-hooks/pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
 
 ## Where you can see all function logs
 
-* You can see all logs from your functions by follow commands
+- You can see all logs from your functions by follow commands
 
 ```bash
 firebase functions:log
 ```
 
-* You also view in Web interface by access
+- You also view in Web interface by access
 
 ![View all logs from Firebase web interface](https://i.imgur.com/SLYqnhS.png)
 

@@ -14,7 +14,7 @@ export default function Samples() {
   const {selectedResources, handleSelectionChange} = useIndexResourceState(todos);
 
   return (
-    <Page title="Samples">
+    <Page title="Samples 11">
       <Layout>
         <Layout.Section>
           <Card>

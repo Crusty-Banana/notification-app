@@ -11,6 +11,7 @@ import AppBridgeProvider from '@assets/components/AppBridgeProvider';
 import {isEmbeddedApp} from '@assets/config/app';
 import AppEmbeddedLayout from '@assets/layouts/EmbeddedLayout/AppEmbeddedLayout';
 import AppFullLayout from '@assets/layouts/FullLayout/AppFullLayout';
+import MainFrame from './components/MainFrame/MainFrame';
 
 /**
  * The main endpoint of application contains all routes, settings for redux and Polaris
@@ -24,7 +25,9 @@ export default function App() {
       <Router history={history}>
         <MainLayout>
           <ErrorBoundary>
-            <Routes />
+            <MainFrame>
+              <Routes />
+            </MainFrame>
           </ErrorBoundary>
         </MainLayout>
       </Router>

@@ -15,15 +15,15 @@ function MainFrame({children}) {
   const userMenuMarkup = <TopBar.UserMenu name="Avada" initials="A" />;
 
   const navigationMarkup = (
-    <Navigation location="/">
+    <Navigation location="">
       <Navigation.Section
         items={[
           {
             label: 'Home',
             icon: HomeIcon,
             url: '/',
-            selected: 0 ? true : false,
-            action: () => {
+            selected: selected === 0 ? true : false,
+            onClick: () => {
               setSelected(0);
             }
           },
@@ -31,8 +31,8 @@ function MainFrame({children}) {
             label: 'Notifications',
             icon: NotificationIcon,
             url: '/notifications',
-            selected: 1 ? true : false,
-            action: () => {
+            selected: selected === 1 ? true : false,
+            onClick: () => {
               setSelected(1);
             }
           },
@@ -40,8 +40,8 @@ function MainFrame({children}) {
             label: 'Settings',
             icon: SettingsIcon,
             url: '/settings',
-            selected: 2 ? true : false,
-            action: () => {
+            selected: selected === 2 ? true : false,
+            onClick: () => {
               setSelected(2);
             }
           }

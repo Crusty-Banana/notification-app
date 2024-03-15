@@ -28,8 +28,7 @@ export default function Home() {
             <Text variant="bodyMd" as="span">
               App status is{' '}
               <Text fontWeight="bold" as="span">
-                {' '}
-                {enabled ? 'enabled' : 'disabled'}{' '}
+                {enabled ? 'enabled' : 'disabled'}
               </Text>
             </Text>
           </SettingToggle>

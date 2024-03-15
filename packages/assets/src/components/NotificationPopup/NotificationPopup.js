@@ -8,7 +8,7 @@ const NotificationPopup = ({
   country = 'United States',
   productName = 'Sport Sneaker',
   timestamp = 'a day ago',
-  productImage = 'https://img.freepik.com/premium-photo/new-hallowen-pictuer_995828-5383.jpg?w=1480'
+  productImage = 'https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/f98c48e5-bdfe-40e3-9cf1-c30da5d8dc56/structure-25-road-running-shoes-pxbP4c.png'
 }) => {
   return (
     <div className="Avava-SP__Wrapper fadeInUp animated">

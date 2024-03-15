@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {LegacyTabs, LegacyCard} from '@shopify/polaris';
 import DisplaySettings from '../DisplaySettings/DisplaySettings';
+import TriggerSettings from '../TriggerSettings/TriggerSettings';
 
 const SettingTabs = () => {
   const [selected, setSelected] = useState(0);
@@ -21,7 +22,7 @@ const SettingTabs = () => {
     <LegacyCard>
       <LegacyTabs tabs={tabs} selected={selected} onSelect={setSelected}>
         <LegacyCard.Section title={tabs[selected].innerLabel}>
-          {selected === 0 && <DisplaySettings />}
+          {selected === 0 ? <DisplaySettings /> : <TriggerSettings />}
         </LegacyCard.Section>
       </LegacyTabs>
     </LegacyCard>

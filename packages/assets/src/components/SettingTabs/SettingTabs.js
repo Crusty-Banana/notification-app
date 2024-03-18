@@ -2,11 +2,10 @@ import React, {useState} from 'react';
 import {LegacyTabs, LegacyCard} from '@shopify/polaris';
 import DisplaySettings from '../DisplaySettings/DisplaySettings';
 import TriggerSettings from '../TriggerSettings/TriggerSettings';
-import defaultSettings from './defaultSetting';
+import PropTypes from 'prop-types';
 
-const SettingTabs = () => {
+const SettingTabs = ({input, setInput}) => {
   const [selected, setSelected] = useState(0);
-  const [input, setInput] = useState(defaultSettings);
   const tabs = [
     {
       id: 'tab-1',
@@ -31,6 +30,11 @@ const SettingTabs = () => {
       </LegacyTabs>
     </LegacyCard>
   );
+};
+
+SettingTabs.propTypes = {
+  input: PropTypes.any,
+  setInput: PropTypes.func
 };
 
 export default SettingTabs;

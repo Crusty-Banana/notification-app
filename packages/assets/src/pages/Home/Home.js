@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Layout, Page, SettingToggle, Text} from '@shopify/polaris';
-import {useStore} from '@assets/reducers/storeReducer';
 import './Home.css';
+
 /**
  * Render a home page for overview
  *
@@ -10,8 +10,6 @@ import './Home.css';
  */
 export default function Home() {
   const [enabled, setEnabled] = useState(false);
-  const {dispatch} = useStore();
-
   return (
     <Page title="Home">
       <Layout>
@@ -19,7 +17,7 @@ export default function Home() {
           <SettingToggle
             action={{
               content: enabled ? 'Disable' : 'Enable',
-              onAction() {
+              async onAction() {
                 setEnabled(prev => !prev);
               }
             }}

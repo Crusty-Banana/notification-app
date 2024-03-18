@@ -11,4 +11,4 @@ const defaultSettings = {
   allowShow: 'all'
 };
 
-export default defaultSettings;
+module.exports = defaultSettings;

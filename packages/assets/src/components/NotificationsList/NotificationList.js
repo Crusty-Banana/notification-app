@@ -33,13 +33,28 @@ function NotificationsList() {
   const [popUps, setPopUps] = useState(items);
 
   const fetchPopUps = async () => {
-    setPopUps(await api('/notifications'));
+    const url = '/notifications';
+    setPopUps(await api(url));
   };
 
   useEffect(() => {
     fetchPopUps();
-    console.log(popUps);
   }, []);
+
+  useEffect(() => {
+    const sortedPopUps = [...popUps];
+    if (sortValue === 'DATE_MODIFIED_DESC') {
+      sortedPopUps.sort((a, b) => {
+        return new Date(a.timestamp) - new Date(b.timestamp);
+      });
+    } else {
+      sortedPopUps.sort((a, b) => {
+        return new Date(b.timestamp) - new Date(a.timestamp);
+      });
+    }
+    setPopUps(sortedPopUps);
+  }, [sortValue]);
+
   return (
     <LegacyCard>
       <ResourceList

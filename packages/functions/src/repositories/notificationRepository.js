@@ -14,6 +14,5 @@ export async function getNotifications() {
   const docsWithId = docs.docs.map(doc => {
     return presentDataAndFormatDate(doc);
   });
-  console.log(docsWithId);
   return docsWithId;
 }

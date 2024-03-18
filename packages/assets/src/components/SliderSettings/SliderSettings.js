@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {RangeSlider, Box, TextField, Text} from '@shopify/polaris';
 import PropTypes from 'prop-types';
 
@@ -33,7 +33,9 @@ SliderSettings.propTypes = {
   max: PropTypes.number,
   initialValue: PropTypes.number,
   suffix: PropTypes.any,
-  helperText: PropTypes.string
+  helperText: PropTypes.string,
+  value: PropTypes.number,
+  setValue: PropTypes.func
 };
 
 export default SliderSettings;

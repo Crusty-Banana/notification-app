@@ -11,6 +11,7 @@ const collection = firestore.collection('settings');
  */
 export async function getSettingById(id) {
   const doc = await collection.doc(id).get();
+  console.log('here', doc);
   return presentDataAndFormatDate(doc);
 }
 
@@ -18,7 +19,7 @@ export async function getSettingById(id) {
  * @param id
  * @returns {Promise<{Settings}>}
  */
-export async function postSettingById(id, data) {
+export async function putSettingById(id, data) {
   console.log(data);
   const doc = await collection.doc(id).set(data);
   return presentDataAndFormatDate(doc);

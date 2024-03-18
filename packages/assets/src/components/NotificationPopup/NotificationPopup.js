@@ -1,6 +1,7 @@
 import React from 'react';
 import './NoticationPopup.scss';
 import {InlineStack, Text} from '@shopify/polaris';
+import PropTypes from 'prop-types';
 
 const NotificationPopup = ({
   firstName = 'John Doe',
@@ -40,6 +41,13 @@ const NotificationPopup = ({
   );
 };
 
-NotificationPopup.propTypes = {};
+NotificationPopup.propTypes = {
+  firstName: PropTypes.string,
+  city: PropTypes.string,
+  country: PropTypes.string,
+  productName: PropTypes.string,
+  timestamp: PropTypes.string,
+  productImage: PropTypes.string
+};
 
 export default NotificationPopup;

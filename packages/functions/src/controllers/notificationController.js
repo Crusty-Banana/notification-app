@@ -11,6 +11,5 @@ export async function getNotificationList(ctx) {
 
 export async function addNotificationByOrder(ctx) {
   const notification = ctx.req.body;
-  return await addNotifications(notification)
-);
+  ctx.body = await addNotifications(notification);
 }

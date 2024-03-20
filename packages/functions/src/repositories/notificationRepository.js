@@ -17,7 +17,7 @@ export async function getNotifications() {
   return docsWithId;
 }
 
-export async function addNotifications({notification}) {
+export async function addNotifications(notification) {
   await collection.add(notification);
   return {success: true};
 }

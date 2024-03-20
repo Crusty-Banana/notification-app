@@ -64,12 +64,10 @@ app.use(
           accessToken: shop.accessToken
         });
         const orders = await shopify.order.list({limit: 30});
-
         await putSettingById('default', defaultSettings);
         await deleteAllNotifications();
         orders.forEach(async order => {
-          const notification = orderToNotifications({order, shopifyDomain});
-          console.log(notification);
+          const notification = await orderToNotifications({order, shopifyDomain});
           await addNotifications(notification);
         });
       } catch (e) {

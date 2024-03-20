@@ -11,6 +11,9 @@ import serviceAccount from '../../serviceAccount.development.json';
 import Shopify from 'shopify-api-node';
 import {getShopByShopifyDomain} from '@avada/core';
 import defaultSettings from '../../../assets/src/pages/Settings/defaultSetting';
+import {addNotifications, deleteAllNotifications} from '../repositories/notificationRepository';
+import {putSettingById} from '../repositories/settingRepository';
+import {orderToNotifications} from '../helpers/auth';
 
 if (firebase.apps.length === 0) {
   firebase.initializeApp({credential: firebase.credential.cert(serviceAccount)});
@@ -61,29 +64,13 @@ app.use(
           accessToken: shop.accessToken
         });
         const orders = await shopify.order.list({limit: 30});
-        const db = firebase.firestore();
-        const notifications = await db.collection('notifications').get();
-        notifications.forEach(async doc => {
-          doc.ref.delete();
-        });
-        orders.forEach(async order => {
-          const firstProduct = await shopify.product.get(order.line_items[0].product_id);
-          await db.collection('notifications').add({
-            city: order.billing_address.city,
-            country: order.billing_address.country,
-            firstName: order.billing_address.first_name,
-            productId: order.line_items[0].product_id,
-            productImage: firstProduct.images[0].src,
-            productName: firstProduct.title,
-            timestamp: order.created_at,
-            shopDomain: shopifyDomain,
-            shopId: shop.id
-          });
 
-          await db
-            .collection('settings')
-            .doc('default')
-            .set(defaultSettings);
+        await putSettingById('default', defaultSettings);
+        await deleteAllNotifications();
+        orders.forEach(async order => {
+          const notification = orderToNotifications({order, shopifyDomain});
+          console.log(notification);
+          await addNotifications(notification);
         });
       } catch (e) {
         console.error(e);

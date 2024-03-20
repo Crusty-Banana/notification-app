@@ -1,4 +1,4 @@
-import {getNotifications} from '../repositories/notificationRepository';
+import {addNotifications, getNotifications} from '../repositories/notificationRepository';
 
 /**
  * @param ctx
@@ -7,4 +7,10 @@ import {getNotifications} from '../repositories/notificationRepository';
 export async function getNotificationList(ctx) {
   const notifications = await getNotifications();
   ctx.body = notifications;
+}
+
+export async function addNotificationByOrder(ctx) {
+  const notification = ctx.req.body;
+  return await addNotifications(notification)
+);
 }

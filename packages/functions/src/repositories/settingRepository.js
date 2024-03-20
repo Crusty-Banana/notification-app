@@ -20,7 +20,6 @@ export async function getSettingById(id) {
  * @returns {Promise<{Settings}>}
  */
 export async function putSettingById(id, data) {
-  console.log(data);
   const doc = await collection.doc(id).set(data);
   return presentDataAndFormatDate(doc);
 }

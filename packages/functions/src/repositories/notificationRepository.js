@@ -16,3 +16,18 @@ export async function getNotifications() {
   });
   return docsWithId;
 }
+
+export async function addNotifications({notification}) {
+  await collection.add(notification);
+  return {success: true};
+}
+
+export async function deleteAllNotifications() {
+  const notifications = await collection.get();
+  const deletePromises = [];
+  notifications.forEach(doc => {
+    deletePromises.push(doc.ref.delete());
+  });
+  await Promise.all(deletePromises);
+  return {success: true};
+}

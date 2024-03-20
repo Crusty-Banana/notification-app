@@ -10,10 +10,10 @@ import appConfig from '@functions/config/app';
 import serviceAccount from '../../serviceAccount.development.json';
 import Shopify from 'shopify-api-node';
 import {getShopByShopifyDomain} from '@avada/core';
-import defaultSettings from '../../../assets/src/pages/Settings/defaultSetting';
 import {addNotifications, deleteAllNotifications} from '../repositories/notificationRepository';
 import {putSettingById} from '../repositories/settingRepository';
 import {orderToNotifications} from '../helpers/auth';
+import defaultSettings from './defaultSetting';
 
 if (firebase.apps.length === 0) {
   firebase.initializeApp({credential: firebase.credential.cert(serviceAccount)});

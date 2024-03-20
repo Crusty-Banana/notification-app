@@ -10,4 +10,5 @@ const defaultSettings = {
   excludedUrls: '',
   allowShow: 'all'
 };
-export default defaultSettings;
+
+module.exports = defaultSettings;

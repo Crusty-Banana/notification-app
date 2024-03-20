@@ -3,8 +3,9 @@ import {Layout, Page} from '@shopify/polaris';
 import SettingTabs from '../../components/SettingTabs/SettingTabs';
 import './Settings.css';
 import NotificationPopup from '../../components/NotificationPopup/NotificationPopup';
-import defaultSettings from '../../components/SettingTabs/defaultSetting';
 import {api} from '../../helpers';
+import defaultSettings from './defaultSetting';
+
 /**
  * @return {JSX.Element}
  */
@@ -14,6 +15,8 @@ export default function Settings() {
     try {
       await setInput(await api('/settings'));
     } catch {
+      console.log('Hello');
+      await setInput(await api('/settings/default'));
       console.log("Shop don't have saved settings yet!");
     }
   };

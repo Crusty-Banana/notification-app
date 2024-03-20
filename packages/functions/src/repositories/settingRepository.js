@@ -11,7 +11,6 @@ const collection = firestore.collection('settings');
  */
 export async function getSettingById(id) {
   const doc = await collection.doc(id).get();
-  console.log('here', doc);
   return presentDataAndFormatDate(doc);
 }
 

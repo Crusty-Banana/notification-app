@@ -7,8 +7,12 @@ import {getSettingById, putSettingById} from '../repositories/settingRepository'
  */
 export async function getShopSettings(ctx) {
   const shopId = getCurrentShop(ctx);
-  console.log(shopId);
   const settings = await getSettingById(shopId);
+  ctx.body = settings;
+}
+
+export async function getDefaultShopSettings(ctx) {
+  const settings = await getSettingById('default');
   console.log('here', settings);
   ctx.body = settings;
 }

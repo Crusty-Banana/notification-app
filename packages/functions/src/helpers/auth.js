@@ -41,7 +41,9 @@ export async function orderToNotifications({order, shopifyDomain}) {
       country: order.billing_address.country,
       firstName: order.billing_address.first_name,
       productId: order.line_items[0].product_id,
-      productImage: firstProduct.images[0].src,
+      productImage: firstProduct.images[0]
+        ? firstProduct.images[0].src
+        : 'https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/f98c48e5-bdfe-40e3-9cf1-c30da5d8dc56/structure-25-road-running-shoes-pxbP4c.png',
       productName: firstProduct.title,
       timestamp: order.created_at,
       shopDomain: shopifyDomain,

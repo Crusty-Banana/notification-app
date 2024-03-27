@@ -63,13 +63,33 @@ app.use(
           shopName: 'newavadastore',
           accessToken: shop.accessToken
         });
+        Promise.all([putSettingById('default', defaultSettings), deleteAllNotifications()]);
+        // TODO: use skeleton for loading, use prefetch product.
+
         const orders = await shopify.order.list({limit: 30});
-        await putSettingById('default', defaultSettings);
-        await deleteAllNotifications();
-        orders.forEach(async order => {
-          const notification = await orderToNotifications({order, shopifyDomain});
-          await addNotifications(notification);
-        });
+        const productIds = [...new Set(orders.map(order => order.line_items[0].product_id))];
+        const products = {};
+        await Promise.all(
+          productIds.map(id => {
+            const fetchProduct = async id => {
+              const product = await shopify.product.get(id);
+              products[id] = {
+                title: product.title,
+                image: product.images[0]
+                  ? product.images[0].src
+                  : 'https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/f98c48e5-bdfe-40e3-9cf1-c30da5d8dc56/structure-25-road-running-shoes-pxbP4c.png'
+              };
+            };
+            return fetchProduct(id);
+          })
+        );
+
+        await Promise.all(
+          orders.map(order => {
+            const notification = orderToNotifications({shop, order, shopifyDomain, products});
+            return addNotifications(notification);
+          })
+        );
       } catch (e) {
         console.error(e);
       }

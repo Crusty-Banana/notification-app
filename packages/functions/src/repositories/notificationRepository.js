@@ -11,9 +11,7 @@ const collection = firestore.collection('notifications');
  */
 export async function getNotifications() {
   const docs = await collection.get();
-  const docsWithId = docs.docs.map(doc => {
-    return presentDataAndFormatDate(doc);
-  });
+  const docsWithId = docs.docs.map(doc => presentDataAndFormatDate(doc));
   return docsWithId;
 }
 
@@ -24,10 +22,7 @@ export async function addNotifications(notification) {
 
 export async function deleteAllNotifications() {
   const notifications = await collection.get();
-  const deletePromises = [];
-  notifications.forEach(doc => {
-    deletePromises.push(doc.ref.delete());
-  });
-  await Promise.all(deletePromises);
+  await Promise.all(notifications.docs.map(doc => doc.ref.delete()));
+
   return {success: true};
 }

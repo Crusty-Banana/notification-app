@@ -36,6 +36,10 @@
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
+        "source": "/webhook/**",
+        "function": "webhook"
+      },
+      {
         "source": "/api/**",
         "function": "api"
       },

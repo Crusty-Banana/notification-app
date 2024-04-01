@@ -1,11 +1,10 @@
 import Router from 'koa-router';
-import * as webhookController from '@function/controller/) {
-    
-}'
+import * as webhookController from '@functions/controllers/webhookController';
 
-
-const router = new Router({
-  prefix: '/webhook'
-});
-
-router 
+export default function webhookRouter() {
+  const router = new Router({
+    prefix: '/webhook'
+  });
+  router.post('/order/new', webhookController.listenNewOrder);
+  return router;
+}

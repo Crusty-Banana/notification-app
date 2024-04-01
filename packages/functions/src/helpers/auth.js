@@ -1,6 +1,3 @@
-import {getShopByShopifyDomain} from '@avada/core';
-import Shopify from 'shopify-api-node';
-
 /**
  * Get current shop id from Koa context
  * Shop ID was set from authentication step in Shopify login
@@ -28,10 +25,9 @@ export function getCurrentUser(ctx) {
  * @param {order, shopifyDomain}
  * @return notification
  */
-export function orderToNotifications({shop, order, shopifyDomain, products}) {
+export function orderToNotifications({shop, order, shopifyDomain, firstProduct}) {
   try {
-    const firstProduct = products[order.line_items[0].product_id];
-    const notification = {
+    return {
       city: order.billing_address.city,
       country: order.billing_address.country,
       firstName: order.billing_address.first_name,
@@ -42,7 +38,6 @@ export function orderToNotifications({shop, order, shopifyDomain, products}) {
       shopDomain: shopifyDomain,
       shopId: shop.id
     };
-    return notification;
   } catch (e) {
     console.log(e);
   }

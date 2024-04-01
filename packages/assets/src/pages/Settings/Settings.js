@@ -1,5 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {Layout, Page} from '@shopify/polaris';
+import {
+  Layout,
+  Page,
+  SkeletonPage,
+  LegacyCard,
+  LegacyTabs,
+  SkeletonBodyText,
+  SkeletonDisplayText
+} from '@shopify/polaris';
 import SettingTabs from '../../components/SettingTabs/SettingTabs';
 import './Settings.css';
 import NotificationPopup from '../../components/NotificationPopup/NotificationPopup';
@@ -11,19 +19,22 @@ import defaultSettings from './defaultSetting';
  */
 export default function Settings() {
   const [input, setInput] = useState(defaultSettings);
+  const [loading, setLoading] = useState(false);
   const callApi = async () => {
     try {
+      setLoading(true);
       await setInput(await api('/settings'));
+      setLoading(false);
     } catch {
-      console.log('Hello');
+      setLoading(true);
       await setInput(await api('/settings/default'));
+      setLoading(false);
       console.log("Shop don't have saved settings yet!");
     }
   };
 
   useEffect(() => {
     callApi();
-    console.log(input);
   }, []);
 
   const saveInput = async () => {
@@ -40,7 +51,30 @@ export default function Settings() {
           <NotificationPopup />
         </Layout.Section>
         <Layout.Section>
-          <SettingTabs input={input} setInput={setInput} />
+          {loading ? (
+            <SkeletonPage>
+              <LegacyCard>
+                <LegacyTabs
+                  tabs={[
+                    {
+                      id: 'tab-1',
+                      content: <SkeletonDisplayText />
+                    },
+                    {
+                      id: 'tab-2',
+                      content: <SkeletonDisplayText />
+                    }
+                  ]}
+                >
+                  <LegacyCard.Section title={'Apperance'}>
+                    <SkeletonBodyText />
+                  </LegacyCard.Section>
+                </LegacyTabs>
+              </LegacyCard>
+            </SkeletonPage>
+          ) : (
+            <SettingTabs input={input} setInput={setInput} />
+          )}
         </Layout.Section>
       </Layout>
     </Page>

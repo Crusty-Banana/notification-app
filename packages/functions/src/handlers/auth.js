@@ -86,7 +86,12 @@ app.use(
 
         await Promise.all(
           orders.map(order => {
-            const notification = orderToNotifications({shop, order, shopifyDomain, products});
+            const notification = orderToNotifications({
+              shop,
+              order,
+              shopifyDomain,
+              firstProduct: products[order.line_items[0].product_id]
+            });
             return addNotifications(notification);
           })
         );

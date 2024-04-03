@@ -4,7 +4,6 @@ import {addNotifications} from '../repositories/notificationRepository';
 import Shopify from 'shopify-api-node';
 
 export async function listenNewOrder(ctx) {
-  console.log('hello, im here');
   try {
     const shopifyDomain = ctx.get('X-Shopify-Shop-Domain');
     const order = ctx.req.body;

@@ -9,7 +9,7 @@ import {
 } from '@shopify/polaris';
 import {useState} from 'react';
 import NotificationPopup from '../NotificationPopup/NotificationPopup';
-import {api} from '../../helpers';
+import useFetchApi from '../../hooks/api/useFetchApi';
 
 function NotificationsList() {
   const [sortValue, setSortValue] = useState('DATE_MODIFIED_DESC');
@@ -19,23 +19,9 @@ function NotificationsList() {
     plural: 'notifications'
   };
 
-  const items = [
-    {
-      firstName: 'Jack',
-      city: 'Hanoi',
-      country: 'Vietnam',
-      productName: 'Shoes',
-      timestamp: 'Now',
-      productImage:
-        'https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/f98c48e5-bdfe-40e3-9cf1-c30da5d8dc56/structure-25-road-running-shoes-pxbP4c.png'
-    }
-  ];
-  const [popUps, setPopUps] = useState(items);
-
-  const fetchPopUps = async () => {
-    const url = '/notifications';
-    setPopUps(await api(url));
-  };
+  const {fetchApi: fetchPopUps, data: popUps, setData: setPopUps, loading} = useFetchApi({
+    url: '/notifications'
+  });
 
   useEffect(() => {
     fetchPopUps();
@@ -45,16 +31,19 @@ function NotificationsList() {
     const sortedPopUps = [...popUps];
     if (sortValue === 'DATE_MODIFIED_DESC') {
       sortedPopUps.sort((a, b) => {
-        return new Date(a.timestamp) - new Date(b.timestamp);
+        return new Date(b.timestamp) - new Date(a.timestamp);
       });
     } else {
       sortedPopUps.sort((a, b) => {
-        return new Date(b.timestamp) - new Date(a.timestamp);
+        return new Date(a.timestamp) - new Date(b.timestamp);
       });
     }
     setPopUps(sortedPopUps);
   }, [sortValue]);
 
+  if (loading) {
+    return <h1>loading</h1>;
+  }
   return (
     <LegacyCard>
       <ResourceList
@@ -63,8 +52,8 @@ function NotificationsList() {
         renderItem={renderItem}
         sortValue={sortValue}
         sortOptions={[
-          {label: 'Newest update', value: 'DATE_MODIFIED_DESC'},
-          {label: 'Oldest update', value: 'DATE_MODIFIED_ASC'}
+          {label: 'Newest created', value: 'DATE_MODIFIED_DESC'},
+          {label: 'Oldest created', value: 'DATE_MODIFIED_ASC'}
         ]}
         onSortChange={selected => {
           setSortValue(selected);

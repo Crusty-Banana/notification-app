@@ -1,5 +1,5 @@
 import React from 'react';
-import {Router, withRouter} from 'react-router-dom';
+import {Router} from 'react-router-dom';
 import ReactRouterLink from '@assets/components/ReactRouterLink/ReactRouterLink';
 import {AppProvider} from '@shopify/polaris';
 import translations from '@shopify/polaris/locales/en.json';

@@ -1,49 +1,52 @@
-import React, {useEffect, useState} from 'react';
-import {
-  Layout,
-  Page,
-  SkeletonPage,
-  LegacyCard,
-  LegacyTabs,
-  SkeletonBodyText,
-  SkeletonDisplayText
-} from '@shopify/polaris';
+import React, {useEffect} from 'react';
+import {Layout, Page, SkeletonPage, SkeletonBodyText} from '@shopify/polaris';
 import SettingTabs from '../../components/SettingTabs/SettingTabs';
-import './Settings.css';
 import NotificationPopup from '../../components/NotificationPopup/NotificationPopup';
-import {api} from '../../helpers';
 import defaultSettings from './defaultSetting';
-
+import useFetchApi from '../../hooks/api/useFetchApi';
+import useEditApi from '../../hooks/api/useEditApi';
 /**
  * @return {JSX.Element}
  */
 export default function Settings() {
-  const [input, setInput] = useState(defaultSettings);
-  const [loading, setLoading] = useState(false);
-  const callApi = async () => {
-    try {
-      setLoading(true);
-      await setInput(await api('/settings'));
-      setLoading(false);
-    } catch {
-      setLoading(true);
-      await setInput(await api('/settings/default'));
-      setLoading(false);
-      console.log("Shop don't have saved settings yet!");
-    }
-  };
+  const {fetchApi: fetchSettings, data: settings, setData: setSettings, loading} = useFetchApi({
+    url: '/settings',
+    defaultData: defaultSettings
+  });
+  const {handleEdit: editSettigns} = useEditApi({url: '/settings'});
 
   useEffect(() => {
-    callApi();
+    fetchSettings();
+    console.log(settings);
   }, []);
 
-  const saveInput = async () => {
-    await api('/settings', {body: input, method: 'PUT'});
+  const saveSettings = async () => {
+    await editSettigns(settings);
   };
+  if (loading) {
+    return (
+      <SkeletonPage
+        fullWidth
+        title="Settings"
+        primaryAction={{content: 'Save'}}
+        subtitle={<SkeletonBodyText>asfdfafdafdsafd</SkeletonBodyText>}
+      >
+        <Layout>
+          <Layout.Section variant="oneThird">
+            <NotificationPopup />
+          </Layout.Section>
+          <Layout.Section>
+            <SettingTabs input={settings} setInput={setSettings} loading={true} />
+          </Layout.Section>
+        </Layout>
+      </SkeletonPage>
+    );
+  }
   return (
     <Page
+      fullWidth
       title="Settings"
-      primaryAction={{content: 'Save', onAction: saveInput}}
+      primaryAction={{content: 'Save', onAction: saveSettings}}
       subtitle="Decide how your notifications will display"
     >
       <Layout>
@@ -51,30 +54,7 @@ export default function Settings() {
           <NotificationPopup />
         </Layout.Section>
         <Layout.Section>
-          {loading ? (
-            <SkeletonPage>
-              <LegacyCard>
-                <LegacyTabs
-                  tabs={[
-                    {
-                      id: 'tab-1',
-                      content: <SkeletonDisplayText />
-                    },
-                    {
-                      id: 'tab-2',
-                      content: <SkeletonDisplayText />
-                    }
-                  ]}
-                >
-                  <LegacyCard.Section title={'Apperance'}>
-                    <SkeletonBodyText />
-                  </LegacyCard.Section>
-                </LegacyTabs>
-              </LegacyCard>
-            </SkeletonPage>
-          ) : (
-            <SettingTabs input={input} setInput={setInput} />
-          )}
+          <SettingTabs input={settings} setInput={setSettings} />
         </Layout.Section>
       </Layout>
     </Page>

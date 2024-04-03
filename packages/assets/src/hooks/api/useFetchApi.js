@@ -33,6 +33,7 @@ export default function useFetchApi({
       const separateChar = path.includes('?') ? '&' : '?';
       const query = params ? separateChar + queryString.stringify(params) : '';
       const resp = await api(path + query);
+      console.log('resp:', resp);
       if (resp.hasOwnProperty('pageInfo')) setPageInfo(resp.pageInfo);
       if (resp.hasOwnProperty('count')) setCount(resp.count);
       if (resp.hasOwnProperty('data')) {
@@ -40,6 +41,7 @@ export default function useFetchApi({
         if (!Array.isArray(newData)) {
           newData = {...defaultData, ...newData};
         }
+        console.log('new Data:', newData);
         setData(prev => {
           if (!keepPreviousData) {
             return newData;

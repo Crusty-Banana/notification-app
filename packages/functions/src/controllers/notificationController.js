@@ -5,7 +5,8 @@ import {addNotifications, getNotifications} from '../repositories/notificationRe
  * @returns {Promise<settings>}
  */
 export async function getNotificationList(ctx) {
-  const notifications = await getNotifications();
+  const query = ctx.req.query;
+  const notifications = await getNotifications(query);
   ctx.body = notifications;
 }
 

@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {Layout, Page, SettingToggle, Text} from '@shopify/polaris';
-import './Home.css';
 
 /**
  * Render a home page for overview
@@ -17,6 +16,8 @@ export default function Home() {
           <SettingToggle
             action={{
               content: enabled ? 'Disable' : 'Enable',
+              variant: 'primary',
+              size: 'large',
               async onAction() {
                 setEnabled(prev => !prev);
               }

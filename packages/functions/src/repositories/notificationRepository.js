@@ -9,10 +9,16 @@ const collection = firestore.collection('notifications');
  * @param id
  * @returns {Promise<{Notifications}>}
  */
-export async function getNotifications() {
-  const docs = await collection.get();
+export async function getNotifications(query) {
+  let docs = collection;
+  for (const key in query) {
+    if (query.hasOwnProperty(key)) {
+      docs = docs.where(key, '==', query[key]);
+    }
+  }
+  docs = await docs.get();
   const docsWithId = docs.docs.map(doc => presentDataAndFormatDate(doc));
-  return docsWithId;
+  return {success: true, data: docsWithId};
 }
 
 export async function addNotifications(notification) {

@@ -13,13 +13,11 @@ export async function getShopSettings(ctx) {
 
 export async function getDefaultShopSettings(ctx) {
   const settings = await getSettingById('default');
-  console.log('here', settings);
   ctx.body = settings;
 }
 
 export async function putShopSettings(ctx) {
-  const data = ctx.req.body;
-  console.log(data);
+  const data = ctx.req.body.data;
   const shopId = getCurrentShop(ctx);
   const settings = await putSettingById(shopId, data);
   ctx.body = settings;

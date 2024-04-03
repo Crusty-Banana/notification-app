@@ -5,7 +5,10 @@ import {
   ResourceItem,
   Text,
   InlineStack,
-  BlockStack
+  BlockStack,
+  TextContainer,
+  SkeletonDisplayText,
+  SkeletonBodyText
 } from '@shopify/polaris';
 import {useState} from 'react';
 import NotificationPopup from '../NotificationPopup/NotificationPopup';
@@ -14,11 +17,6 @@ import useFetchApi from '../../hooks/api/useFetchApi';
 function NotificationsList() {
   const [sortValue, setSortValue] = useState('DATE_MODIFIED_DESC');
   const [selectedItems, setSelectedItems] = useState([]);
-  const resourceName = {
-    singular: 'notification',
-    plural: 'notifications'
-  };
-
   const {fetchApi: fetchPopUps, data: popUps, setData: setPopUps, loading} = useFetchApi({
     url: '/notifications'
   });
@@ -41,8 +39,29 @@ function NotificationsList() {
     setPopUps(sortedPopUps);
   }, [sortValue]);
 
+  const resourceName = {
+    singular: 'notification',
+    plural: 'notifications'
+  };
+  const sortOptions = [
+    {label: 'Newest created', value: 'DATE_MODIFIED_DESC'},
+    {label: 'Oldest created', value: 'DATE_MODIFIED_ASC'}
+  ];
   if (loading) {
-    return <h1>loading</h1>;
+    return (
+      <React.Fragment>
+        {[...Array(20)].map((_, index) => (
+          <LegacyCard key={index}>
+            <LegacyCard.Section>
+              <TextContainer>
+                <SkeletonDisplayText size="small" />
+                <SkeletonBodyText />
+              </TextContainer>
+            </LegacyCard.Section>
+          </LegacyCard>
+        ))}
+      </React.Fragment>
+    );
   }
   return (
     <LegacyCard>
@@ -51,14 +70,8 @@ function NotificationsList() {
         items={popUps}
         renderItem={renderItem}
         sortValue={sortValue}
-        sortOptions={[
-          {label: 'Newest created', value: 'DATE_MODIFIED_DESC'},
-          {label: 'Oldest created', value: 'DATE_MODIFIED_ASC'}
-        ]}
-        onSortChange={selected => {
-          setSortValue(selected);
-          console.log(`Sort option changed to ${selected}.`);
-        }}
+        sortOptions={sortOptions}
+        onSortChange={setSortValue}
         selectedItems={selectedItems}
         onSelectionChange={setSelectedItems}
         selectable={true}

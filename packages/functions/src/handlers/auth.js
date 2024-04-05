@@ -64,10 +64,10 @@ app.use(
         });
 
         await Promise.all([
-          putSettingById('default', defaultSettings),
+          fetchAndSyncNotifications({shopify, shopifyDomain, shop}),
           registerScripttag({shopify}),
-          registerWebhook({shopify}),
-          fetchAndSyncNotifications({shopify, shopifyDomain, shop})
+          putSettingById('default', defaultSettings),
+          registerWebhook({shopify})
         ]);
       } catch (e) {
         console.error(e);

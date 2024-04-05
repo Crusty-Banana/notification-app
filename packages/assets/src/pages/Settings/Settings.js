@@ -17,7 +17,6 @@ export default function Settings() {
 
   useEffect(() => {
     fetchSettings();
-    console.log(settings);
   }, []);
 
   const saveSettings = async () => {
